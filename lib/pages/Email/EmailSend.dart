@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pdf/widgets.dart' as pw;
 
-class emailSend extends StatelessWidget {
-  emailSend({super.key});
+class EmailSend extends StatelessWidget {
+  EmailSend({super.key});
 
   Future sendEmail({
     required String name,

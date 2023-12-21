@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/Email/emailSend.dart';
+import 'pages/Email/EmailSend.dart';
 import 'pages/invoices.dart';
 import 'dart:async';
 import 'dart:io';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: emailSend(), /*PDFSave(),*//*EmailSender(),*/ /*InvoicePage(),*/
+      home: EmailSend(), /*PDFSave(),*//*EmailSender(),*/ /*InvoicePage(),*/
     );
   }
 }
