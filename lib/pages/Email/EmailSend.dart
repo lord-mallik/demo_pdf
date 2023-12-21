@@ -1,19 +1,18 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pdf/widgets.dart' as pw;
 
-class emailSend extends StatelessWidget {
-  emailSend({super.key});
+class EmailSend extends StatelessWidget {
+  EmailSend({super.key});
 
   Future sendEmail({
     required String name,
     required String email,
     required String subject,
-    required String message,
-    // required Uint8List pdfBytes,
+    required String message, // required Uint8List pdfBytes,
   }) async {
     const serviceId = 'service_xauzxbk';
     const templateId = 'template_7o9vnii';
@@ -39,6 +38,7 @@ class emailSend extends StatelessWidget {
         }));
     debugPrint(response.body);
   }
+
   Future<Uint8List> generatePdfData() async {
     final pdf = pw.Document();
     pdf.addPage(
@@ -50,6 +50,7 @@ class emailSend extends StatelessWidget {
     );
     return pdf.save();
   }
+
   TextEditingController userName = TextEditingController();
   TextEditingController userEmail = TextEditingController();
   TextEditingController userSubject = TextEditingController();
@@ -180,5 +181,3 @@ class emailSend extends StatelessWidget {
     );
   }
 }
-
-
