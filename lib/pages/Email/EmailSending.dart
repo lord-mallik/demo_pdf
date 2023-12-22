@@ -1,10 +1,13 @@
 //This code is for sending mail using Smtp mailer.
 
+import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'smtpServerConnection.dart';
@@ -17,7 +20,7 @@ class EmailSending extends StatefulWidget {
 }
 
 class _EmailSendingState extends State<EmailSending> {
-  Future<Uint8List> generatePdfData() async {
+  Future<String> generatePdfData() async {
     final pdf = pw.Document();
     pdf.addPage(
       pw.Page(
@@ -26,20 +29,30 @@ class _EmailSendingState extends State<EmailSending> {
         ),
       ),
     );
-    return pdf.save();
+    final pdfBytes = await pdf.save();
+
+    final directory = await path_provider.getTemporaryDirectory();
+    final path = '${directory.path}/test.pdf';
+
+    await File(path).writeAsBytes(pdfBytes);
+
+    return path;
   }
 
   Future<void> sendingMail() async {
     try {
+      final pdfPath = await generatePdfData();
       var message = Message();
-      message.from = Address(userEmail.toString());
+      message.from = Address(userEmail.toString(), 'Aarav Kumar');
       message.recipients.add('lordnikhil11@gmail.com');
       message.bccRecipients.add('bccAddress@example.com');
-      message.ccRecipients.addAll([Address('destCc1@example.com'), 'destCc2@example.com']);
+      message.ccRecipients.addAll([const Address('destCc1@example.com'), 'destCc2@example.com']);
       message.subject = 'Mailer Test';
       message.text = 'Email from the mailer testing';
-      //message.attachments = []; /*base64Encode(pdfBytes),*/
-      // var smtpServer = gmailSaslXoauth2(userEmail, accessToken);
+      message.attachments = [
+        FileAttachment(File(pdfPath))
+      ];
+
       var smtpServer2 = gmail(userEmail, accessToken);
       await send(message, smtpServer2);
 
