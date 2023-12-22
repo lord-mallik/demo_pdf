@@ -1,3 +1,5 @@
+//This code is for sending mail using EmailJS.
+
 import 'dart:convert';
 import 'dart:typed_data';
 

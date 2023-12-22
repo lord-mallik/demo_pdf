@@ -42,6 +42,7 @@ dependencies:
   path_provider: ^2.1.1
   image_picker_widget: ^2.4.1
   http: ^1.1.2
+  mailer: ^6.0.1
 
 
 
