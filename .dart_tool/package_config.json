@@ -236,6 +236,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///Users/nikhilmallik/.pub-cache/hosted/pub.dev/intl-0.18.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "js",
       "rootUri": "file:///Users/nikhilmallik/.pub-cache/hosted/pub.dev/js-0.6.7",
       "packageUri": "lib/",
@@ -246,6 +252,18 @@
       "rootUri": "file:///Users/nikhilmallik/.pub-cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "logging",
+      "rootUri": "file:///Users/nikhilmallik/.pub-cache/hosted/pub.dev/logging-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "mailer",
+      "rootUri": "file:///Users/nikhilmallik/.pub-cache/hosted/pub.dev/mailer-6.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "matcher",
@@ -446,7 +464,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2023-12-21T12:36:23.802684Z",
+  "generated": "2023-12-22T09:03:48.367106Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }
