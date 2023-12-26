@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "562355043888",
+    "project_id": "flutter-demo-pdf",
+    "storage_bucket": "flutter-demo-pdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562355043888:android:0577e4c5b8f645697777f5",
+        "android_client_info": {
+          "package_name": "com.example.demo_pdf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsdWnWxsEuHRb5jA8mRg6avrThqDZY7D8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

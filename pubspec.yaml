@@ -43,6 +43,13 @@ dependencies:
   image_picker_widget: ^2.4.1
   http: ^1.1.2
   mailer: ^6.0.1
+  googleapis: ^12.0.0
+  googleapis_auth: ^1.4.1
+  url_launcher: ^6.2.2
+  google_sign_in: ^6.2.1
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
+  sign_in_button: ^3.2.0
 
 
 

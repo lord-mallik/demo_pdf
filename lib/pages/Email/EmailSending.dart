@@ -1,13 +1,12 @@
 //This code is for sending mail using Smtp mailer.
 
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:path_provider/path_provider.dart' as path_provider;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
-import 'package:pdf/pdf.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:pdf/widgets.dart' as pw;
 
 import 'smtpServerConnection.dart';
@@ -30,13 +29,14 @@ class _EmailSendingState extends State<EmailSending> {
       ),
     );
     final pdfBytes = await pdf.save();
+    if (kIsWeb) {}
+      final directory = await path_provider.getTemporaryDirectory();
+      final path = '${directory.path}/test.pdf';
 
-    final directory = await path_provider.getTemporaryDirectory();
-    final path = '${directory.path}/test.pdf';
+      await File(path).writeAsBytes(pdfBytes);
+      return path;
 
-    await File(path).writeAsBytes(pdfBytes);
 
-    return path;
   }
 
   Future<void> sendingMail() async {
@@ -46,12 +46,11 @@ class _EmailSendingState extends State<EmailSending> {
       message.from = Address(userEmail.toString(), 'Aarav Kumar');
       message.recipients.add('lordnikhil11@gmail.com');
       message.bccRecipients.add('bccAddress@example.com');
-      message.ccRecipients.addAll([const Address('destCc1@example.com'), 'destCc2@example.com']);
+      message.ccRecipients.addAll(
+          [const Address('destCc1@example.com'), 'destCc2@example.com']);
       message.subject = 'Mailer Test';
       message.text = 'Email from the mailer testing';
-      message.attachments = [
-        FileAttachment(File(pdfPath))
-      ];
+      message.attachments = [FileAttachment(File(pdfPath))];
 
       var smtpServer2 = gmail(userEmail, accessToken);
       await send(message, smtpServer2);
