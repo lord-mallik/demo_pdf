@@ -1,15 +1,16 @@
-import 'dart:async';
-import 'dart:io';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:path_provider/path_provider.dart';
 
-import 'pages/Email/EmailSend.dart';
-import 'pages/Email/EmailSending.dart';
+import 'firebase_options.dart';
+import 'pages/Splash/Splash.dart';
+import 'pages/login/LoginScreen.dart';
 
 // import 'dart:html' as html;
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -26,11 +27,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-    home: const EmailSending(),
+      /*home: const EmailSending(),*/
+      home: const SplashScreen(),
+      /*home: const LoginScreen(),*/
       /*  home: EmailSend(),*/
-      /*home: PDFSave(),*/
+      /*     home: PDFSave(),*/
       /* home: const EmailSender(),*/
-      /*home: InvoicePage(),*/
+      /* home: InvoicePage(),*/
     );
   }
 }
