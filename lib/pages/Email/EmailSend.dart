@@ -1,11 +1,16 @@
 //This code is for sending mail using EmailJS.
 
 import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:html' as html;
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:pdf/widgets.dart' as pw;
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+import '../../Helper/GoogleDrive.dart';
 
 class EmailSend extends StatelessWidget {
   EmailSend({super.key});
@@ -14,7 +19,8 @@ class EmailSend extends StatelessWidget {
     required String name,
     required String email,
     required String subject,
-    required String message, // required Uint8List pdfBytes,
+    required String message,
+    required String pdfLink,
   }) async {
     const serviceId = 'service_xauzxbk';
     const templateId = 'template_7o9vnii';
@@ -30,18 +36,19 @@ class EmailSend extends StatelessWidget {
           'template_id': templateId,
           'user_id': userId,
           'template_params': {
-            'user_name': name,
-            'user_email': email,
-            'to_email': 'lordnikhil11@gmail.com',
-            'user_subject': subject,
-            'user_message': message,
-            // 'pdf_bytes': base64Encode(pdfBytes),
+            'user_name': name, // regard Name
+            'user_email': email, // reply to email
+            'to_email': 'lordnikhil11@gmail.com', // send to mail
+            'user_subject': subject, // mail subject
+            'user_message': message, // mail message
+            'pdf_links': pdfLink, // pdf link
           },
         }));
     debugPrint(response.body);
   }
 
-  Future<Uint8List> generatePdfData() async {
+  Future<String> generatePdfData() async {
+    debugPrint('Init generate pdf');
     final pdf = pw.Document();
     pdf.addPage(
       pw.Page(
@@ -50,13 +57,35 @@ class EmailSend extends StatelessWidget {
         ),
       ),
     );
-    return pdf.save();
+    debugPrint('Saving the pdf file');
+    final pdfBytes = await pdf.save();
+    final base64Pdf = base64Encode(pdfBytes);
+    // Convert base64-encoded string back to Uint8List
+    final pdfData = base64Decode(base64Pdf);
+    debugPrint('converting the file');
+    // Create a Blob from the Uint8List
+    final blob = html.Blob([pdfData]);
+
+    // Create an Object URL from the Blob
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    debugPrint('url $url');
+    final drive = GoogleDrive();
+    debugPrint('init drive');
+
+      final driveFile = await drive.upload(File(url));
+      debugPrint(driveFile);
+      return driveFile;
+
+
+
   }
 
-  TextEditingController userName = TextEditingController();
-  TextEditingController userEmail = TextEditingController();
-  TextEditingController userSubject = TextEditingController();
-  TextEditingController userMessage = TextEditingController();
+  TextEditingController userName = TextEditingController(text: 'Nikhil');
+  TextEditingController userEmail =
+      TextEditingController(text: 'nmallik005@gmail.com');
+  TextEditingController userSubject = TextEditingController(text: 'Testing');
+  TextEditingController userMessage =
+      TextEditingController(text: 'Testing pdf link through mail');
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +202,7 @@ class EmailSend extends StatelessWidget {
                 email: userEmail.text,
                 subject: userSubject.text,
                 message: userMessage.text,
-                // pdfBytes: pdfBytes,
+                pdfLink: pdfBytes,
               );
             },
             child: const Text('Send Mail'),

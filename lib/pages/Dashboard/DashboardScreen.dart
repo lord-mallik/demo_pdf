@@ -1,7 +1,9 @@
+import 'package:demo_pdf/pages/Email/EmailSending.dart';
 import 'package:demo_pdf/pages/login/LoginScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../Email/EmailSend.dart';
 import '../login/GoogleSignIn.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -24,8 +26,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: Center(
         child: Column(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             Text(user!.email!),
+            const SizedBox(
+              height: 20,
+            ),
             Text(user!.displayName!),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+
+                debugPrint("Email Send");
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  EmailSend()),
+                );
+              },
+              child: const Text('Email Send'),
+            ), const SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
               onPressed: () {
                 authSignIn.signOutUser();
@@ -37,6 +61,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
               child: const Text('Log Out'),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+
           ],
         ),
       ),

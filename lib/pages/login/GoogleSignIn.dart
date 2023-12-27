@@ -1,29 +1,27 @@
+import 'dart:io';
+
+import 'package:demo_pdf/pages/Email/smtpServerConnection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis/drive/v3.dart' as ga;
 
 class AuthSignIn {
   Future<UserCredential> signInWithGoogle() async {
     if (kIsWeb) {
-
       GoogleAuthProvider googleProvider = GoogleAuthProvider();
-
-      // Add necessary scopes for Google Drive access
-      googleProvider.addScope('https://www.googleapis.com/auth/drive');
+      googleProvider.addScope(ga.DriveApi.driveFileScope);
 
       try {
-        // Use signInWithRedirect for a better user experience, especially on web
         await FirebaseAuth.instance.signInWithRedirect(googleProvider);
         final credential = await FirebaseAuth.instance.getRedirectResult();
-        // Retrieve the result after the redirect
+
         return credential;
       } catch (e) {
-        // Handle sign-in error
         debugPrint('Error signing in with Google: $e');
         rethrow;
       }
     } else {
-      // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       // Obtain the auth details from the request
@@ -35,13 +33,34 @@ class AuthSignIn {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
+      final userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithCredential(credential);
+      return userCredential;
     }
   }
+
 
   Future<void> signOutUser() async {
     await FirebaseAuth.instance.signOut();
   }
+
+  Future<String?> getAccessToken() async {
+    try {
+      final googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount!.authentication;
+final accessToken = googleSignInAuthentication.accessToken;
+      return accessToken;
+    } catch (error) {
+      print('Error getting access token: $error');
+      return null;
+    }
+  }
 }
+// ignore_for_file: avoid_print
+
+
+

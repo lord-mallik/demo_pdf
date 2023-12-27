@@ -1,3 +1,4 @@
+import 'package:demo_pdf/pages/Email/smtpServerConnection.dart';
 import 'package:demo_pdf/pages/login/LoginScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  var ClientId;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 0), () async {
       await check_if_already_login(context);
+    });
+    setState(() {
+      ClientId = clientId;
     });
   }
 
