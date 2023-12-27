@@ -31,7 +31,6 @@ class InvoicePage extends StatelessWidget {
           LineItem('Program the robots', 400.50),
           LineItem('Find tasteful dance moves for the robots', 80.55),
           LineItem('General quality assurance', 80),
-
         ],
         name: 'Create and deploy software package'),
     Invoice(

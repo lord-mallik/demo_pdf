@@ -1,4 +1,3 @@
-import 'package:demo_pdf/pages/Email/EmailSending.dart';
 import 'package:demo_pdf/pages/login/LoginScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,15 +38,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-
                 debugPrint("Email Send");
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) =>  EmailSend()),
+                  MaterialPageRoute(builder: (context) => EmailSend()),
                 );
               },
               child: const Text('Email Send'),
-            ), const SizedBox(
+            ),
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
@@ -64,7 +63,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const SizedBox(
               height: 20,
             ),
-
           ],
         ),
       ),

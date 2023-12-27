@@ -9,8 +9,10 @@ class Invoice {
     required this.items,
     required this.name,
   });
+
   double totalCost() {
-    return items.fold(0, (previousValue, element) => previousValue + element.cost);
+    return items.fold(
+        0, (previousValue, element) => previousValue + element.cost);
   }
 }
 

@@ -53,9 +53,7 @@ dependencies:
   oauth2_client: ^3.2.2
   flutter_secure_storage: ^8.0.0
   universal_html: ^2.0.4
-  syncfusion_flutter_pdf: ^24.1.43
-  file_saver: ^0.2.9
-  excel: ^4.0.2
+
 
 
 

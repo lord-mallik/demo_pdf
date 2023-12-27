@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:demo_pdf/pages/Email/smtpServerConnection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -40,7 +37,6 @@ class AuthSignIn {
     }
   }
 
-
   Future<void> signOutUser() async {
     await FirebaseAuth.instance.signOut();
   }
@@ -52,7 +48,7 @@ class AuthSignIn {
           await googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount!.authentication;
-final accessToken = googleSignInAuthentication.accessToken;
+      final accessToken = googleSignInAuthentication.accessToken;
       return accessToken;
     } catch (error) {
       print('Error getting access token: $error');
@@ -61,6 +57,3 @@ final accessToken = googleSignInAuthentication.accessToken;
   }
 }
 // ignore_for_file: avoid_print
-
-
-

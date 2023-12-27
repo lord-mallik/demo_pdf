@@ -111,14 +111,13 @@ class GoogleDrive {
     var response = await drive.files.create(
         ga.File()
           ..name = p.basename(file.path)
-          ..parents = [sharedFolderId], // Set the parents property to the ID of the target folder
+          ..parents = [sharedFolderId],
+        // Set the parents property to the ID of the target folder
         uploadMedia: ga.Media(file.openRead(), file.lengthSync()));
 
     print("Result ${response.toJson()}");
   }
 }
-
-
 
 /*import 'dart:convert';
 import 'dart:html';
