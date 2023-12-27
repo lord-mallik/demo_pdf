@@ -16,7 +16,7 @@ const _clientSecret = "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";
 
 const _scopes = [ga.DriveApi.driveFileScope];*/
 
-class GoogleDrive {
+/*class GoogleDrive {
   final storage = SecureStorage();
   final _clientId =
       "188721097392-89s2mck3u67lavm7e2aebep4gkgtgceb.apps.googleusercontent.com";
@@ -64,7 +64,61 @@ class GoogleDrive {
     print("Result ${response.toJson()}");
 
   }
+}*/
+
+class GoogleDrive {
+  final storage = SecureStorage();
+  final _clientId =
+      "188721097392-89s2mck3u67lavm7e2aebep4gkgtgceb.apps.googleusercontent.com";
+  final _clientSecret = "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";
+  final _scopes = [ga.DriveApi.driveFileScope];
+  final String sharedFolderId = "1cyQNWqIj1Z7F3enhZaRjczYfho5_E6xn";
+
+  // Get Authenticated Http Client
+  Future<http.Client> getHttpClient() async {
+    // Get Credentials
+    var credentials = await storage.getCredentials();
+    if (credentials == null) {
+      // Needs user authentication
+      var authClient = await clientViaUserConsent(
+          ClientId(_clientId, _clientSecret), _scopes, (url) {
+        // Open Url in Browser
+        launch(url);
+      });
+      // Save Credentials
+      await storage.saveCredentials(authClient.credentials.accessToken,
+          authClient.credentials.refreshToken!);
+      return authClient;
+    } else {
+      print(credentials["expiry"]);
+      // Already authenticated
+      return authenticatedClient(
+          http.Client(),
+          AccessCredentials(
+              AccessToken(credentials["type"], credentials["data"],
+                  DateTime.tryParse(credentials["expiry"])!),
+              credentials["refreshToken"],
+              _scopes));
+    }
+  }
+
+  // Upload File to Shared Folder
+  Future upload(File file) async {
+    var client = await getHttpClient();
+    var drive = ga.DriveApi(client);
+    print("Uploading file");
+
+    var response = await drive.files.create(
+        ga.File()
+          ..name = p.basename(file.path)
+          ..parents = [sharedFolderId], // Set the parents property to the ID of the target folder
+        uploadMedia: ga.Media(file.openRead(), file.lengthSync()));
+
+    print("Result ${response.toJson()}");
+  }
 }
+
+
 
 /*import 'dart:convert';
 import 'dart:html';

@@ -4,12 +4,10 @@ import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:pdf/widgets.dart' as pw;
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+
 import '../../Helper/GoogleDrive.dart';
 
 class EmailSend extends StatelessWidget {
@@ -72,12 +70,10 @@ class EmailSend extends StatelessWidget {
     final drive = GoogleDrive();
     debugPrint('init drive');
 
-      final driveFile = await drive.upload(File(url));
-      debugPrint(driveFile);
-      return driveFile;
-
-
-
+    final driveFile = await drive.upload(File(url));
+    debugPrint('uploading file');
+    debugPrint(driveFile);
+    return driveFile;
   }
 
   TextEditingController userName = TextEditingController(text: 'Nikhil');
