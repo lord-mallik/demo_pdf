@@ -1,7 +1,10 @@
+import 'package:demo_pdf/pages/Email/smtpServerConnection.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:googleapis_auth/auth_io.dart';
 
 import 'firebase_options.dart';
+import 'pages/Email/EmailSend.dart';
 import 'pages/Splash/Splash.dart';
 import 'pages/login/LoginScreen.dart';
 
@@ -11,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -30,7 +34,7 @@ class MyApp extends StatelessWidget {
       /*home: const EmailSending(),*/
       home: const SplashScreen(),
       /*home: const LoginScreen(),*/
-      /*  home: EmailSend(),*/
+        // home: EmailSend(),
       /*     home: PDFSave(),*/
       /* home: const EmailSender(),*/
       /* home: InvoicePage(),*/

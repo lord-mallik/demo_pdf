@@ -2,7 +2,7 @@
 
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+import 'package:demo_pdf/pages/login/GoogleSignIn.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -19,7 +19,12 @@ class EmailSending extends StatefulWidget {
 }
 
 class _EmailSendingState extends State<EmailSending> {
+  AuthSignIn authSignIn = AuthSignIn();
+
+  // Oauth2Client oauth2client = Oauth2Client();
+
   Future<String> generatePdfData() async {
+    // GoogleDrive googleDrive = GoogleDrive();
     final pdf = pw.Document();
     pdf.addPage(
       pw.Page(
@@ -29,18 +34,19 @@ class _EmailSendingState extends State<EmailSending> {
       ),
     );
     final pdfBytes = await pdf.save();
-    if (kIsWeb) {}
-      final directory = await path_provider.getTemporaryDirectory();
-      final path = '${directory.path}/test.pdf';
 
-      await File(path).writeAsBytes(pdfBytes);
-      return path;
+    final directory = await path_provider.getTemporaryDirectory();
+    final path = '${directory.path}/test.pdf';
 
-
+    await File(path).writeAsBytes(pdfBytes);
+    return path;
   }
 
   Future<void> sendingMail() async {
     try {
+/*      final accessToken = Oauth2Client();
+      accessToken.toString();*/
+
       final pdfPath = await generatePdfData();
       var message = Message();
       message.from = Address(userEmail.toString(), 'Aarav Kumar');
@@ -51,9 +57,9 @@ class _EmailSendingState extends State<EmailSending> {
       message.subject = 'Mailer Test';
       message.text = 'Email from the mailer testing';
       message.attachments = [FileAttachment(File(pdfPath))];
+      var smtpServer = gmail(userEmail, passwordToken);
 
-      var smtpServer2 = gmail(userEmail, accessToken);
-      await send(message, smtpServer2);
+      await send(message, smtpServer);
 
       debugPrint('Mail sent successfully');
     } catch (e) {
