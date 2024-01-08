@@ -1,8 +1,8 @@
 //This code is for sending mail using EmailJS.
 
 import 'dart:convert';
-import 'dart:html' as html;
-import 'dart:io';
+/*import 'dart:html' as html;
+import 'dart:io';*/
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -62,15 +62,15 @@ class EmailSend extends StatelessWidget {
     final pdfData = base64Decode(base64Pdf);
     debugPrint('converting the file');
     // Create a Blob from the Uint8List
-    final blob = html.Blob([pdfData]);
+/*    final blob = html.Blob([pdfData]);
 
     // Create an Object URL from the Blob
     final url = html.Url.createObjectUrlFromBlob(blob);
     debugPrint('url $url');
     final drive = GoogleDrive();
-    debugPrint('init drive');
+    debugPrint('init drive');*/
 
-    final driveFile = await drive.upload(File(url));
+    final driveFile = /*await drive.upload(File(url));*/ "";
     debugPrint('uploading file');
     debugPrint(driveFile);
     return driveFile;

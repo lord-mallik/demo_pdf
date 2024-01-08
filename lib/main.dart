@@ -1,8 +1,8 @@
+import 'package:demo_pdf/LinkedIn_Bg_Image/BackgroundImage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
-import 'pages/Splash/Splash.dart';
 
 // import 'dart:html' as html;
 void main() async {
@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       /*home: const EmailSending(),*/
-      home: const SplashScreen(),
+      /*home: const SplashScreen(),*/ home: const BackgroundImage(),
       /*home: const LoginScreen(),*/
-      // home: EmailSend(),
+     /* home: EmailSend(),*/
       /*     home: PDFSave(),*/
       /* home: const EmailSender(),*/
       /* home: InvoicePage(),*/
